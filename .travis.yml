@@ -1,0 +1,30 @@
+# More syntax details at: https://docs.travis-ci.com/user/customizing-the-build
+# copy from pyscf project
+
+language: python
+os: 
+  - linux
+  # - osx
+
+python:
+  - 3.6
+
+before_install:
+  - uname -a
+
+install:
+  - pip install --upgrade coverage setuptools wheel twine
+  - pip install -r requirements.txt
+
+before_script:
+  - python -V
+
+
+script:
+  - make build
+  - make travisinstall
+  - make test
+
+notifications:
+  email: false
+

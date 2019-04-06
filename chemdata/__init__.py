@@ -3,6 +3,7 @@ independent chemical symbols
 """
 
 
+__version__ = '1.0.0'
 
 import os
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
@@ -34,36 +35,44 @@ chemical_symbols = [
     'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc',
     'Lv', 'Ts', 'Og']
 
+def version():
+    return __version__
+
 
 global atom_dict
 atom_dict = None
 def read_atom():
-	global atom_dict
-	if atom_dict is None:
-		with open(atom_file) as fd:
-			import json
-			atom_dict = json.load(fd)
+    global atom_dict
+    if atom_dict is None:
+        assert os.path.exists(atom_file), 'atom file does not exist'
+        with open(atom_file) as fd:
+            import json
+            atom_dict = json.load(fd)
 
 
-def get_element_property(element, _property):
-	read_atom()
-	return atom_dict[element][_property]
+def get_element_property(element, _property='covalentradius'):
+    read_atom()
+    return atom_dict[element][_property]
 
 
 def get_element_index(element):
-	return chemical_symbols.index(element)
+    return chemical_symbols.index(element)
 
 
 def get_element_covalent(element):
-	read_atom()
-	return atom_dict[element]['covalentradius']
+    read_atom()
+    return atom_dict[element]['covalentradius']
 
 def get_element_mass(element):
-	read_atom()
-	return atom_dict[element]['mass']
+    read_atom()
+    return atom_dict[element]['mass']
 
 
 def get_element_electronic_configuration(element):
-	read_atom()
-	return atom_dict[element]['Electron_Configuration']
+    read_atom()
+    return atom_dict[element]['Electron_Configuration']
+
+def get_all_properties():
+    read_atom()
+    return list(atom_dict['X'].keys())
 
