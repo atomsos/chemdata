@@ -11,3 +11,5 @@ chemical data collections
 ## TODOS
 
 * [ ] bond data
+* [ ] references
+
