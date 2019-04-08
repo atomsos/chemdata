@@ -3,7 +3,7 @@ independent chemical symbols
 """
 
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 import os
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
@@ -39,7 +39,14 @@ def version():
     return __version__
 
 def get_element(element):
-    if isinstance(element, int):
+    if isinstance(element, str):
+        return element
+    else:
+        try:
+            element = int(element)
+        except Exception as e:
+            print(element, 'is not a symbol or int')
+            raise e
         element = chemical_symbols[element]
     return element
 
