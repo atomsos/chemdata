@@ -3,7 +3,7 @@ independent chemical symbols
 """
 
 
-__version__ = '1.1.1'
+__version__ = '1.2.0'
 
 import os
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
@@ -92,3 +92,28 @@ def get_element_electronic_configuration(element):
 def get_all_properties():
     read_atom()
     return list(atom_dict['X'].keys())
+
+def get_valence_electron(element):
+    read_atom()
+    config = get_element_electronic_configuration(element)
+    full_shell = {
+        's' : 2,
+        'p' : 6,
+        'd' : 10,
+        'f' : 14,
+        'g' : 16,
+    }
+    is_full = True
+    n_valence = 0
+    for cfg in config.split('_'):
+        if cfg.startswith('['):
+            continue
+        n, l = cfg[0], cfg[1]
+        nele = int(cfg[2:])
+        if is_full and nele < full_shell[l]:
+            is_full = False
+        if not is_full:
+            n_valence += nele
+    if n_valence == 0:
+        n_valence = nele
+    return n_valence
