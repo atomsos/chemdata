@@ -3,7 +3,7 @@ independent chemical symbols
 """
 
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 import os
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
@@ -38,6 +38,11 @@ chemical_symbols = [
 def version():
     return __version__
 
+def get_element(element):
+    if isinstance(element, int):
+        element = chemical_symbols[element]
+    return element
+
 
 global atom_dict
 atom_dict = None
@@ -52,27 +57,31 @@ def read_atom():
 
 def get_element_property(element, _property='covalentradius'):
     read_atom()
+    element = get_element(element)
     return atom_dict[element][_property]
 
 
 def get_element_index(element):
+    element = get_element(element)
     return chemical_symbols.index(element)
 
 
 def get_element_covalent(element):
     read_atom()
+    element = get_element(element)
     return atom_dict[element]['covalentradius']
 
 def get_element_mass(element):
     read_atom()
+    element = get_element(element)
     return atom_dict[element]['mass']
 
 
 def get_element_electronic_configuration(element):
     read_atom()
+    element = get_element(element)
     return atom_dict[element]['Electron_Configuration']
 
 def get_all_properties():
     read_atom()
     return list(atom_dict['X'].keys())
-
