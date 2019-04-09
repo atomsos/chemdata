@@ -3,7 +3,7 @@ independent chemical symbols
 """
 
 
-__version__ = '1.2.0'
+__version__ = '1.2.1'
 
 import os
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
@@ -117,3 +117,6 @@ def get_valence_electron(element):
     if n_valence == 0:
         n_valence = nele
     return n_valence
+
+def get_element_pair_covalent(element1, element2=None):
+    return get_element_covalent(element1) + get_element_covalent(element2 or element1)
