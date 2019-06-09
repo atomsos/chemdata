@@ -7,7 +7,7 @@
         "2covalentradius": 0,
         "number": 0,
         "Group": "0A",
-        "covalentradius": 0,
+        "covalentradius": 0.1,
         "name": "Xatom",
         "symbol": "X"
     },

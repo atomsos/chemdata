@@ -3,7 +3,7 @@ independent chemical symbols
 """
 
 
-__version__ = '1.2.1'
+__version__ = '1.3.0'
 
 import os
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
@@ -68,7 +68,7 @@ def get_element_property(element, _property='covalentradius'):
     return atom_dict[element][_property]
 
 
-def get_element_index(element):
+def get_element_number(element):
     element = get_element(element)
     return chemical_symbols.index(element)
 
