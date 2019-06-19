@@ -14,7 +14,11 @@ def test():
             chemdata.get_element_property(sym, p)
     for func_name in chemdata.__dir__():
         if func_name.startswith('get_element_'):
-            getattr(chemdata, func_name)('X')
+            data = getattr(chemdata, func_name)('H')
+            print(func_name, data, type(data))
+        elif func_name.startswith('get_spectra_'):
+            data = getattr(chemdata, func_name)('V', 10)
+            print(func_name, data, type(data))
 
 
 if __name__ == '__main__':
