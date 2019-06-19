@@ -6,7 +6,20 @@ chemical data collections
 
 ## Includings
 
-* atom data
+* basic atom data
+* nist data
+
+
+
+## data interface
+
+```python
+import chemdata
+
+
+chemdata.get_spectra_dict()
+```
+
 
 
 

@@ -12,6 +12,7 @@ __all__ = [
     'get_spectra_ionization_energy',
     'get_spectra_uncertainty',
     'get_spectra_references',
+    'get_spectra_dict',
 ]
 
 import os
@@ -82,5 +83,6 @@ def get_spectra_uncertainty(element, charge):
 def get_spectra_references(element, charge):
     return GET_DATA(element, charge, 'References')
 
-def get_spectra_dict():
-    return LOAD_NIST_SPECTURM()
+def get_spectra_dict(_, __):
+    LOAD_NIST_SPECTURM()
+    return NIST_SPECTURM

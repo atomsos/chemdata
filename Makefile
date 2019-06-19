@@ -20,7 +20,7 @@ travisinstall:
 	python setup.py install
 
 test:
-	bash -c "export PYTHONPATH=$(PYTHONPATH):$(PWD)/build/lib; coverage run --source chemdata ./tests/test.py" # coverage run --source chemdata ./chemdata/test.py 
+	bash -c "source env.sh; coverage run --source chemdata ./tests/test.py" # coverage run --source chemdata ./chemdata/test.py 
 	echo `which chemdata`
 	# coverage run --source chemdata `which chemdata` -h
 	# coverage run --source chemdata `which chemdata` LISTSUBCOMMAND
