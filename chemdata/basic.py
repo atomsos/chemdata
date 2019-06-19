@@ -63,6 +63,9 @@ def get_element(element):
     return element
 
 
+def get_bash_elements():
+    print(' '.join(chemical_symbols[1:]))
+
 global ATOM_DICT
 ATOM_DICT = None
 def READ_ATOM():

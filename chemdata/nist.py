@@ -82,3 +82,5 @@ def get_spectra_uncertainty(element, charge):
 def get_spectra_references(element, charge):
     return GET_DATA(element, charge, 'References')
 
+def get_spectra_dict():
+    return LOAD_NIST_SPECTURM()
