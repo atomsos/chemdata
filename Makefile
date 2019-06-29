@@ -1,30 +1,37 @@
-.PHONY: all build install test
+.PHONY: all reqs build install test
+
+pes_parent_dir:=$(shell pwd)/$(lastword $(MAKEFILE_LIST))
+pes_parent_dir:=$(shell dirname $(pes_parent_dir))
+
+Project=$(shell basename $(pes_parent_dir))
 
 all:
+	make reqs
 	make build
 	make install
 	make test
 
-
+reqs:
+	pipreqs --help >/dev/null 2>&1 || pip3 install pipreqs || pip3 install pipreqs --user
+	pipreqs $(Project)
+	sed -i 's/==/>=/g' requirements.txt
+	cat requirements.txt 
 
 build:
-	rm -rf build/ sdist/ dist/ chemdata-*/ chemdata.egg-info/
+	rm -rf build/ sdist/ dist/ $(Project)-*/ $(Project).egg-info/
 	python setup.py sdist build
 	python setup.py bdist_wheel --universal
 	twine check dist/*
 
 install:
-	python setup.py install --user
-
-travisinstall:
-	python setup.py install
+	cd /tmp; pip uninstall -yy $(Project); cd -; python setup.py install || python setup.py install --user
 
 test:
-	bash -c "source env.sh; coverage run --source chemdata ./tests/test.py" # coverage run --source chemdata ./chemdata/test.py 
-	echo `which chemdata`
-	# coverage run --source chemdata `which chemdata` -h
-	# coverage run --source chemdata `which chemdata` LISTSUBCOMMAND
-	# coverage run --source chemdata `which chemdata` LISTSUBCOMMAND | xargs -n 1 -I [] bash -c '(coverage run --source chemdata `which chemdata` [] -h >/dev/null 2>&1 || echo ERROR: [])'
+	bash -c "export PYTHONPATH="$(PYTHONPATH):$(PWD)"; coverage run --source $(Project) ./tests/test.py" 
+	echo `which $(Project)`
+	# coverage run --source $(Project) `which $(Project)` -h
+	# coverage run --source $(Project) `which $(Project)` LISTSUBCOMMAND
+	# coverage run --source $(Project) `which $(Project)` LISTSUBCOMMAND | xargs -n 1 -I [] bash -c '(coverage run --source $(Project) `which $(Project)` [] -h >/dev/null 2>&1 || echo ERROR: [])'
 	coverage report -m
 
 test_env:
@@ -37,7 +44,6 @@ test_env:
 	pip install -r requirements.txt; \
 	make build; \
 	make travisinstall; \
-	cd /tmp;\
 	make test'
 	
 upload:

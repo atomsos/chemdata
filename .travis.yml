@@ -13,7 +13,7 @@ before_install:
   - uname -a
 
 install:
-  - pip install --upgrade coverage setuptools wheel twine
+  - pip install --upgrade pipreqs coverage setuptools wheel twine
   - pip install -r requirements.txt
 
 before_script:
@@ -22,7 +22,7 @@ before_script:
 
 script:
   - make build
-  - make travisinstall
+  - make install
   - make test
 
 notifications:
