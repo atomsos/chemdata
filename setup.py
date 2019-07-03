@@ -15,7 +15,7 @@ if __name__ == '__main__':
         name='chemdata',
         version=get_version(),
         description=(
-            'tool collection for parsing vasp inputs & outputs'
+            'Basic Chemical Data, e.g. Chemical Elements, NIST Chemical Data',
         ),
         long_description=open('README.md').read(),
         long_description_content_type='text/markdown',
