@@ -13,13 +13,16 @@ all:
 
 reqs:
 	pipreqs --help >/dev/null 2>&1 || pip3 install pipreqs || pip3 install pipreqs --user
-	pipreqs $(Project)
+	pipreqs --force $(Project)
+	mv $(Project)/requirements.txt .
 	sed -i 's/==/>=/g' requirements.txt
+	sed -i 's/numpy.*/numpy/g' requirements.txt
+	sed -i 's/psutil.*/psutil/g' requirements.txt
 	cat requirements.txt 
 
 build:
 	rm -rf build/ sdist/ dist/ $(Project)-*/ $(Project).egg-info/
-	python setup.py sdist build
+	# python setup.py sdist build
 	python setup.py bdist_wheel --universal
 	twine check dist/*
 
