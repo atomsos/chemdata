@@ -3,8 +3,6 @@ independent chemical symbols
 """
 
 
-
-
 __all__ = [
     'get_element',
     'get_element_number',
@@ -18,11 +16,13 @@ __all__ = [
 ]
 
 
-
-
 import os
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 atom_file = os.path.join(BASEDIR, 'atom.json')
+
+global ATOM_DICT
+ATOM_DICT = None
+
 
 chemical_symbols = [
     # 0
@@ -50,8 +50,9 @@ chemical_symbols = [
     'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc',
     'Lv', 'Ts', 'Og']
 
+
 def get_element(element):
-    if isinstance(element, str):
+    if isinstance(element, str) and not element.isdigit():
         return element
     else:
         try:
@@ -63,11 +64,14 @@ def get_element(element):
     return element
 
 
+def get_element_symbol(element):
+    return get_element(element)
+
+
 def get_bash_elements():
     print(' '.join(chemical_symbols[1:]))
 
-global ATOM_DICT
-ATOM_DICT = None
+
 def READ_ATOM():
     global ATOM_DICT
     if ATOM_DICT is None:
@@ -78,6 +82,9 @@ def READ_ATOM():
 
 
 def get_element_number(element):
+    """
+    get number of element what ever the input is
+    """
     element = get_element(element)
     return chemical_symbols.index(element)
 
@@ -100,6 +107,7 @@ def get_element_covalent(element):
 def get_element_mass(element):
     return get_element_property(element, 'mass')
 
+
 def get_element_electronic_configuration(element):
     return get_element_property(element, 'Electron_Configuration')
 
@@ -108,11 +116,11 @@ def get_valence_electron(element):
     READ_ATOM()
     config = get_element_electronic_configuration(element)
     full_shell = {
-        's' : 2,
-        'p' : 6,
-        'd' : 10,
-        'f' : 14,
-        'g' : 16,
+        's': 2,
+        'p': 6,
+        'd': 10,
+        'f': 14,
+        'g': 16,
     }
     is_full = True
     n_valence = 0
@@ -128,6 +136,7 @@ def get_valence_electron(element):
     if n_valence == 0:
         n_valence = nele
     return n_valence
+
 
 def get_element_pair_covalent(element1, element2=None):
     return get_element_covalent(element1) + get_element_covalent(element2 or element1)
